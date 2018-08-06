@@ -1,2 +1,2 @@
-export const kUnity = x => (Math.floor(x / 1000)) + 'k'
+export const kUnity = x => (x / 1000).toFixed(1) + 'k'
 

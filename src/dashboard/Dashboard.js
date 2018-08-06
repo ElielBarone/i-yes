@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import DonutIndicator from '../widgets/donut/Donut.indicator'
+import SimpleNumericIndicator from '../widgets/simple-numeric/SimpleNumeric.indicator'
 import IndicatorService from '../services/Indicator.service'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -8,19 +9,24 @@ import CardContent from '@material-ui/core/CardContent'
 class Dashboard extends Component {
   state = {indicators:[]}
 
+  getIndicatorClass = (indicatorType) => {
+    switch(indicatorType){
+        case 'Donut':
+            return DonutIndicator
+        default:
+            return SimpleNumericIndicator
+    }
+  }
+
   renderIndicator = (indicator, index) => {
+      var IndicatorClass = this.getIndicatorClass(indicator.type);
     return (
         
-        <Grid item xs={12} md={4} lg={2} key={index}>
+        <Grid item xs={12} md={4} lg={3} key={index}>
             <Card>
-                <CardContent classes={{root:"last-child{padding-bottom=16px;}"}}>
-                    <DonutIndicator title={indicator.title} 
-                                    value={indicator.value} 
-                                    goal={indicator.goal} 
-                                    url={indicator.url}
-                                    options={indicator.options}
-                                    apiMethod={indicator.apiMethod}
-                                    apiBody={indicator.apiBody}></DonutIndicator>
+                <CardContent style={{paddingBottom:16}}>
+                
+                    <IndicatorClass indicator={indicator}></IndicatorClass>
                 </CardContent>
             </Card>
         </Grid>
